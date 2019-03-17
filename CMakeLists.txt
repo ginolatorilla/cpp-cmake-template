@@ -5,3 +5,5 @@ project(yourproject
     VERSION 0.9.0
     DESCRIPTION "A C++ project"
 )
+
+add_executable(${PROJECT_NAME} src/main.cpp)
