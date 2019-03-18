@@ -6,4 +6,14 @@ project(yourproject
     DESCRIPTION "A C++ project"
 )
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_library(${PROJECT_NAME} src/impl.cpp)
+target_include_directories(${PROJECT_NAME}
+    INTERFACE
+        include
+)
+
+add_executable(${PROJECT_NAME}_exe src/main.cpp)
+set_target_properties(${PROJECT_NAME}_exe
+    PROPERTIES
+        OUTPUT_NAME ${PROJECT_NAME}
+)
