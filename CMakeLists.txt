@@ -6,14 +6,14 @@ project(yourproject
     DESCRIPTION "A C++ project"
 )
 
-option(YOURPROJECT_BUILD_SHARED "Builds shared (*.so) libraries.")
+option(${PROJECT_NAME}_BUILD_SHARED "Builds shared (*.so) libraries.")
 
-set(YOURPROJECT_SOURCES src/impl.cpp)
-if(YOURPROJECT_BUILD_SHARED)
-    add_library(${PROJECT_NAME} SHARED ${YOURPROJECT_SOURCES})
-else(YOURPROJECT_BUILD_SHARED)
-    add_library(${PROJECT_NAME} STATIC ${YOURPROJECT_SOURCES})
-endif(YOURPROJECT_BUILD_SHARED)
+set(${PROJECT_NAME}_SOURCES src/impl.cpp)
+if(${PROJECT_NAME}_BUILD_SHARED)
+    add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SOURCES})
+else(${PROJECT_NAME}_BUILD_SHARED)
+    add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_SOURCES})
+endif(${PROJECT_NAME}_BUILD_SHARED)
 
 target_include_directories(${PROJECT_NAME}
     INTERFACE
