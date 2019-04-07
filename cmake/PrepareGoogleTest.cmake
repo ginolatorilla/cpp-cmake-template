@@ -10,10 +10,6 @@
 # add_executable(run_test ${run_test_SOURCES})
 # target_link_libraries(run_test ${GTEST_BOTH_LIBRARIES} pthread)
 
-# Try to find GTest first in default installation directory.
-#   (i.e. /usr/local)
-find_package(GTest)
-
 # Respect the project's build type.
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     set(_lib_suffix "d${CMAKE_STATIC_LIBRARY_SUFFIX}")
@@ -21,19 +17,7 @@ else()
     set(_lib_suffix "${CMAKE_STATIC_LIBRARY_SUFFIX}")
 endif()
 
-if (GTEST_FOUND)
-    # Create library targets.
-    # This is the recommended order for proper linkage.
-    get_filename_component(_gtest_lib_dir "${GTEST_LIBRARY}" DIRECTORY)
-    foreach(_installed_lib gtest gmock gmock_main)
-        add_library(${_installed_lib} UNKNOWN IMPORTED)
-        set_target_properties(${_installed_lib} PROPERTIES
-            IMPORTED_LOCATION "${_gtest_lib_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}${_installed_lib}${_lib_suffix}"
-            INTERFACE_INCLUDE_DIRECTORIES "${GTEST_INCLUDE_DIRS}"
-        )
-    endforeach()
-else()
-    message(STATUS "But I will download it later from GitHub")
+macro(download_and_build_gtest)
     # Get the latest release from GitHub.
     # Build a static library and pass our project's debug symbols.
     # Inspired by and referenced from Google Benchmark
@@ -87,6 +71,29 @@ else()
         add_dependencies(${_downloaded_lib} googletest)
     endforeach()
     set(GTEST_INCLUDE_DIRS "${install_dir}/include")
+endmacro()
+
+if(${PROJECT_NAME}_USE_LATEST_GTEST)
+    download_and_build_gtest()
+else()
+    # Try to find GTest first in default installation directory.
+    #   (i.e. /usr/local)
+    find_package(GTest)
+    if (GTEST_FOUND)
+        # Create library targets.
+        # This is the recommended order for proper linkage.
+        get_filename_component(_gtest_lib_dir "${GTEST_LIBRARY}" DIRECTORY)
+        foreach(_installed_lib gtest gmock gmock_main)
+            add_library(${_installed_lib} UNKNOWN IMPORTED)
+            set_target_properties(${_installed_lib} PROPERTIES
+                IMPORTED_LOCATION "${_gtest_lib_dir}/${CMAKE_STATIC_LIBRARY_PREFIX}${_installed_lib}${_lib_suffix}"
+                INTERFACE_INCLUDE_DIRECTORIES "${GTEST_INCLUDE_DIRS}"
+            )
+        endforeach()
+    else()
+        message(STATUS "But I will download it later from GitHub")
+        download_and_build_gtest()
+    endif()
 endif()
 
 # Expose everything to GTEST_BOTH_LIBRARIES
