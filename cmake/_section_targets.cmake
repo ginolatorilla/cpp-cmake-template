@@ -2,12 +2,8 @@
 #
 # Declare all build targets here.
 
-# Guarantees that this file be included once.
-# You can't declare build targets more than once.
-if(__section_targets)
-    return()
-endif()
-set(__section_targets INCLUDED)
+include(IncludeMeOnce)
+IncludeMeOnce()
 
 set(${PROJECT_NAME}_SOURCES src/impl.cpp)
 

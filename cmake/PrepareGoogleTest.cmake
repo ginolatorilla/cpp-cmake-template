@@ -10,6 +10,9 @@
 # add_executable(run_test ${run_test_SOURCES})
 # target_link_libraries(run_test ${GTEST_BOTH_LIBRARIES} pthread)
 
+include(IncludeMeOnce)
+IncludeMeOnce()
+
 # Respect the project's build type.
 if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     set(_lib_suffix "d${CMAKE_STATIC_LIBRARY_SUFFIX}")

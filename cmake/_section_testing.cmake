@@ -2,6 +2,9 @@
 #
 # Declare all test-related targets here.
 
+include(IncludeMeOnce)
+IncludeMeOnce()
+
 enable_testing()
 include(PrepareGoogleTest)
 

@@ -4,6 +4,9 @@
 # I encourage you to use `target_compile_definitions` (for -D<FLAGS>)
 # and `target_compiler_options` for target-specific settings.
 
+include(IncludeMeOnce)
+IncludeMeOnce()
+
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
