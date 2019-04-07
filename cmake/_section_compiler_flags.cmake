@@ -53,3 +53,22 @@ endmacro()
 add_exe_linker_flag(-fuse-ld=gold)
 add_exe_linker_flag(-Wl,--disable-new-dtags)
 add_exe_linker_flag(-Wl,--no-as-needed)
+
+# Instrumentation
+if (${PROJECT_NAME}_ENABLE_CLANG_TIDY)
+    cmake_minimum_required(VERSION 3.7.2)
+    macro(push_clang_tidy_check _flag)
+        set(_clang_tidy_checks "${_clang_tidy_checks},${_flag}")
+    endmacro()
+
+    push_clang_tidy_check(-*)
+    push_clang_tidy_check(modernize-*)
+    push_clang_tidy_check(performance-*)
+    push_clang_tidy_check(portability-*)
+    push_clang_tidy_check(readability-*)
+    push_clang_tidy_check(clang-analyzer-*)
+    push_clang_tidy_check(cppcoreguidelines-*)
+    push_clang_tidy_check(hicpp-*)
+
+    set(CMAKE_CXX_CLANG_TIDY clang-tidy;-checks=${_clang_tidy_checks};-header-filter='.';)
+endif()
