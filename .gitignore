@@ -38,3 +38,6 @@ CMakeCache.txt
 **/Makefile
 *.ninja*
 yourproject
+
+# Build folders
+**/build
