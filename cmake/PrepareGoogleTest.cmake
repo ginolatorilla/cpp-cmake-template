@@ -52,7 +52,8 @@ macro(download_and_build_gtest)
             -Dgtest_force_shared_crt:BOOL=ON
         BUILD_BYPRODUCTS
             ${_byproducts_of_googletest}
-        )
+        UPDATE_DISCONNECTED ${${PROJECT_NAME}_SKIP_GTEST_UPDATE}
+    )
 
     # After it's built, let's extract useful paths and assemble
     #   CMake-friendly library targets.
