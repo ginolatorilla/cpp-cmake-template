@@ -6,13 +6,10 @@ project(yourproject
     DESCRIPTION "A C++ project"
 )
 
-option(${PROJECT_NAME}_BUILD_SHARED "Builds shared (*.so) libraries.")
-option(${PROJECT_NAME}_ENABLE_TESTING "Enable testing of this project.")
-option(${PROJECT_NAME}_USE_LATEST_GTEST "Download Google Test from GitHub, then build it and use it.")
-option(${PROJECT_NAME}_SKIP_GTEST_UPDATE "Skip updating of Google Test during build step.")
-
 # Makes include() statements cleaner
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+include(_section_options)
 
 set(${PROJECT_NAME}_SOURCES src/impl.cpp)
 if(${PROJECT_NAME}_BUILD_SHARED)
