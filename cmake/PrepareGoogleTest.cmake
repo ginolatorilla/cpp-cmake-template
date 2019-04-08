@@ -43,6 +43,7 @@ macro(download_and_build_gtest)
         ${EXCLUDE_FROM_ALL_OPT} ${EXCLUDE_FROM_ALL_VALUE}
         GIT_REPOSITORY https://github.com/google/googletest.git
         GIT_TAG master
+        GIT_PROGRESS ON
         PREFIX "${CMAKE_BINARY_DIR}/googletest"
         INSTALL_DIR "${CMAKE_BINARY_DIR}/googletest"
         CMAKE_CACHE_ARGS
@@ -56,6 +57,7 @@ macro(download_and_build_gtest)
         BUILD_BYPRODUCTS
             ${_byproducts_of_googletest}
         UPDATE_DISCONNECTED ${${PROJECT_NAME}_SKIP_GTEST_UPDATE}
+        LOG_INSTALL ON
     )
 
     # After it's built, let's extract useful paths and assemble
