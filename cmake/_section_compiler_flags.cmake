@@ -37,13 +37,17 @@ add_cxx_flag(-Wextra)
 add_cxx_flag(-pedantic)
 
 macro(add_cxx_flag_for_build _build_type _flag)
-    set(CMAKE_CXX_FLAGS_${_build_type} "${CMAKE_CXX_FLAGS} ${_flag}")
+    set(CMAKE_CXX_FLAGS_${_build_type} "${CMAKE_CXX_FLAGS_${_build_type}} ${_flag}")
 endmacro()
 
+add_cxx_flag_for_build(DEBUG ${CMAKE_CXX_FLAGS})
 add_cxx_flag_for_build(DEBUG -Og)
 add_cxx_flag_for_build(DEBUG -ggdb3)
+add_cxx_flag_for_build(MINSIZEREL ${CMAKE_CXX_FLAGS})
 add_cxx_flag_for_build(MINSIZEREL -Os)
+add_cxx_flag_for_build(RELEASE ${CMAKE_CXX_FLAGS})
 add_cxx_flag_for_build(RELEASE -O3)
+add_cxx_flag_for_build(RELWITHDEBINFO ${CMAKE_CXX_FLAGS})
 add_cxx_flag_for_build(RELWITHDEBINFO -Og)
 
 macro(add_exe_linker_flag _flag)
